@@ -4,7 +4,7 @@ const port = 3000;
 const dir = __dirname;
 
 app.set('view engine', 'pug');              //View Engine
-app.use(express.static('views/public'));    //Static Content
+app.use(express.static('public'));    //Static Content
 
 app.get('/', (req,res)=>{
 
