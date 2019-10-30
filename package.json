@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/mrfn323/petzilla-MongoDB/issues"
   },
-  "homepage": "https://github.com/mrfn323/petzilla-MongoDB#readme"
+  "homepage": "https://github.com/mrfn323/petzilla-MongoDB#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.3.3",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
 }
