@@ -1,0 +1,19 @@
+{
+  "name": "petzilla",
+  "version": "1.0.0",
+  "description": "This is a social media platform for pets created with nodejs and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrfn323/petzilla-MongoDB.git"
+  },
+  "author": "Syed Fahad Nadeem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrfn323/petzilla-MongoDB/issues"
+  },
+  "homepage": "https://github.com/mrfn323/petzilla-MongoDB#readme"
+}
