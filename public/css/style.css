@@ -17,3 +17,15 @@ h1{
     margin: 0 auto;
 
 }
+
+.login-action{
+
+    margin: auto;
+    display: inline-block;
+    text-align: center;
+    border: 3px solid black;
+    font-size: 24px;
+    width: 30%;
+    padding: 20px;
+
+}
