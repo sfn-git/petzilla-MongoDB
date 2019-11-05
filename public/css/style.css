@@ -18,14 +18,10 @@ h1{
 
 }
 
-.login-action{
+.center{
 
-    margin: auto;
-    display: inline-block;
+    margin: 0;
+    width: 100%;
     text-align: center;
-    border: 3px solid black;
-    font-size: 24px;
-    width: 30%;
-    padding: 20px;
 
 }

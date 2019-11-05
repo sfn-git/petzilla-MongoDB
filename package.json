@@ -2,7 +2,7 @@
   "name": "petzilla",
   "version": "1.0.0",
   "description": "This is a social media platform for pets created with nodejs and MongoDB",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

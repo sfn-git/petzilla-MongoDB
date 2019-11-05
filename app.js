@@ -8,7 +8,19 @@ app.use(express.static('public'));    //Static Content
 
 app.get('/', (req,res)=>{
 
-    res.render('index', {title: 'Test', message: 'h1 test'})
+    res.render('index', {title: 'PetZilla - Home'})
+
+})
+
+app.get('/Create', (req, res)=>{
+
+    res.render('createaccount', {title: 'PetZilla - Create Account'})
+
+})
+
+app.get('/Login', (req,res)=>{
+
+    res.render('login', {title: 'PetZilla - Login'})
 
 })
 

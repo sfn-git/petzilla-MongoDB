@@ -1,12 +1,12 @@
+//- Including Layout
+include layout.pug
+
 html
     head
         title= title
-        link(rel="stylesheet", href="css/style.css")
-        link(rel="stylesheet", href="css/font.css")
     body
-        img(id="logo" src="img/petzilla.png", alt="Petzilla logo")
         h1 Welcome to PetZilla. Please login or create an account
-        .login-action
+        .center
             form(action="", method="get")
                 p Username:
                 input(type="text", name="userName")
@@ -16,4 +16,6 @@ html
                 br
                 .submit
                     input(type="submit" value="Login")
+            a(href="#")
+                p New to PetZilla? Click here to create an account
             
