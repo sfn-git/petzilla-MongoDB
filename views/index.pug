@@ -1,0 +1,19 @@
+html
+    head
+        title= title
+        link(rel="stylesheet", href="css/style.css")
+        link(rel="stylesheet", href="css/font.css")
+    body
+        img(id="logo" src="img/petzilla.png", alt="Petzilla logo")
+        h1 Welcome to PetZilla. Please login or create an account
+        .login-action
+            form(action="", method="get")
+                p Username:
+                input(type="text", name="userName")
+                p Password:
+                input(type="password", name="password")
+                br
+                br
+                .submit
+                    input(type="submit" value="Login")
+            
