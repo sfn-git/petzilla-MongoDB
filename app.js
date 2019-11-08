@@ -5,6 +5,8 @@ const dir = __dirname;
 
 app.set('view engine', 'pug');              //View Engine
 app.use(express.static('public'));    //Static Content
+// Reading Post request
+app.use(express.urlencoded());
 
 app.get('/', (req,res)=>{
 
@@ -21,6 +23,22 @@ app.get('/Create', (req, res)=>{
 app.get('/Login', (req,res)=>{
 
     res.render('login', {title: 'PetZilla - Login'})
+
+})
+
+app.post('/Login', (req,res)=>{
+
+    // console.log(req);
+    console.log(req.body.username);
+    console.log(req.body.password);
+    res.redirect('/')
+
+})
+
+app.get('*', (req,res)=>{
+
+    res.status(404);
+    res.render('404', {title: 'PetZilla - 404'})
 
 })
 

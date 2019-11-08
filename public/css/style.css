@@ -20,8 +20,16 @@ h1{
 
 .center{
 
+    display: block;
     margin: 0;
     width: 100%;
+    text-align: center;
+
+}
+
+
+.dog-404{
+
     text-align: center;
 
 }
