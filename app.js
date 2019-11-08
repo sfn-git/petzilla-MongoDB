@@ -31,6 +31,8 @@ app.post('/Login', (req,res)=>{
     // console.log(req);
     console.log(req.body.username);
     console.log(req.body.password);
+    var username = req.body.username;
+    var password = req.body.password;
     res.redirect('/')
 
 })

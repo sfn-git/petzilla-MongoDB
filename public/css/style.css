@@ -1,6 +1,6 @@
 body{
 
-    background-color: orange;
+    background-color: darkorange;
     font-family: 'Nunito', sans-serif;
 
 }
@@ -30,6 +30,13 @@ h1{
 
 .dog-404{
 
+    text-align: center;
+
+}
+
+h3 {
+
+    font-size: 36;
     text-align: center;
 
 }
