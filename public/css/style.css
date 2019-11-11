@@ -18,7 +18,7 @@ h1{
 
 }
 
-.center{
+.center .submit{
 
     display: block;
     margin: 0;
@@ -38,5 +38,15 @@ h3 {
 
     font-size: 36;
     text-align: center;
+
+}
+
+.form{
+
+    display: inline-block;
+    position: absolute;
+    right: 40%;
+    text-align: left;
+    /* width: 50%; */
 
 }

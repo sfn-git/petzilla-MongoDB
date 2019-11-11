@@ -10,4 +10,27 @@ html(lang="en")
         title PetZilla - Create Account
         link(rel="stylesheet", href="css/style.css")
     body
-        h1 TEST
+        .center
+            h1 Create an account for PetZilla
+            .form
+                form(action="/Create", method="post")
+                    p Username: 
+                        input(type="text", name="username")
+                    p Password:
+                        input(type="password", name="password")
+                    p Confirm Password:
+                        input(type="password", name="confirmpassword")
+                    p Full Name:    
+                        input(type="text", name="name")
+                    p Birthday: 
+                        input(type="date", name="birthday")
+                    p Gender: 
+                        select(name="gender")
+                            option(value="Other") Other
+                            option(value="M") Male
+                            option(value="F") Female
+                    .submit
+                        input(type="submit", value="Create Account")
+                        
+                    
+                
