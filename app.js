@@ -1,7 +1,19 @@
 const express = require('express');
+const sha256 = require('js-sha256');
 const app = express();
 const port = 3000;
-const dir = __dirname;
+
+// MongoDB Stuff
+const mongo = require('mongodb');
+var dbconfig = require('./dbconfig.json');
+var dbusername = dbconfig.username;
+var dbpassword = dbconfig.password;
+var dbhost = dbconfig.host;
+var dbport = dbconfig.port;
+var dbdatabase = dbconfig.database;
+var uri = `mongodb://${dbusername}:${dbpassword}@${dbhost}:${dbport}`;
+
+console.log(mongo);
 
 app.set('view engine', 'pug');              //View Engine
 app.use(express.static('public'));    //Static Content
@@ -29,12 +41,22 @@ app.get('/Login', (req,res)=>{
 app.post('/Login', (req,res)=>{
 
     // console.log(req);
-    console.log(req.body.username);
-    console.log(req.body.password);
     var username = req.body.username;
-    var password = req.body.password;
+    var password = sha256(req.body.password);
+
     res.redirect('/')
 
+})
+
+app.post('/Create', (req,res)=>{
+
+    var username = req.body.username;
+    var password = req.body.password;
+    var name = req.body.name;
+    var birthday = req.body.birthday;
+    var gender = req.body.gender;
+
+    res.redirect('/');
 })
 
 app.get('*', (req,res)=>{
