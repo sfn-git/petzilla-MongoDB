@@ -4,22 +4,26 @@ const app = express();
 const port = 3000;
 
 // MongoDB Stuff
-const mongo = require('mongodb');
+const mongo = require('mongodb').MongoClient;
 var dbconfig = require('./dbconfig.json');
 var dbusername = dbconfig.username;
 var dbpassword = dbconfig.password;
 var dbhost = dbconfig.host;
 var dbport = dbconfig.port;
 var dbdatabase = dbconfig.database;
-var uri = `mongodb://${dbusername}:${dbpassword}@${dbhost}:${dbport}`;
+var uri = `mongodb://${dbusername}:${dbpassword}@${dbhost}:${dbport}/${dbdatabase}?authSource=petzilla`;
 
-console.log(mongo);
+// Connect to MongoDB
+
+
+
 
 app.set('view engine', 'pug');              //View Engine
 app.use(express.static('public'));    //Static Content
 // Reading Post request
 app.use(express.urlencoded());
 
+// ALL GET REQUEST
 app.get('/', (req,res)=>{
 
     res.render('index', {title: 'PetZilla - Home'})
@@ -38,6 +42,28 @@ app.get('/Login', (req,res)=>{
 
 })
 
+app.get('/mongotest', (req, res)=>{
+
+    var message;
+    const client = new mongo(uri, { useNewUrlParser: true });
+    client.connect(err=>{
+        if(err){console.error(err)}
+    
+        const collection = client.db('petzilla').collection('users');
+        collection.find({}, function(err, result){
+            if(err) throw err;
+            message = result;
+            console.log(result)
+        });
+    
+        client.close();
+    })
+
+    res.render('mongotest', {title: "Mongotest", message: message})
+
+})
+
+// ALL POST REQUEST
 app.post('/Login', (req,res)=>{
 
     // console.log(req);
@@ -58,6 +84,7 @@ app.post('/Create', (req,res)=>{
 
     res.redirect('/');
 })
+
 
 app.get('*', (req,res)=>{
 
