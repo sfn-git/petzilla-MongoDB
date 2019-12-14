@@ -1,7 +1,5 @@
 const express = require('express');
 const sha256 = require('js-sha256');
-const fs = require('fs');
-const https = require('https');
 const app = express();
 const port = 3000;
 
@@ -40,31 +38,25 @@ app.get('/Login', (req,res)=>{
 })
 
 app.get('/mongotest', (req, res)=>{
-
-    
     const client = new mongo(uri, { useNewUrlParser: true });
     client.connect(err=>{
+
         if(err){console.error(err)}
-        var messageOut = "Results: \n";
+        var messageOut = "";
         const db = client.db('petzilla');
+
         db.collection('users').find({}).toArray(function(err, result){
             if(err) throw err;
 
             for(index in result){
-
-                messageOut += JSON.stringify(result[index]);
-                messageOut += "\n"
-
+                messageOut +=  JSON.stringify(result[index]);
+                messageOut += "\n";
             }
-            res.render('mongotest', {title: "Mongo Test", message: `${messageOut}`}) 
             
+            res.render('mongotest', {title: "Mongo Test", message: `${messageOut}`}) 
         });
-    
         client.close();
-        
     })  
-    
-
 })
 
 // ALL POST REQUEST
@@ -88,21 +80,17 @@ app.post('/Create', (req,res)=>{
 
     const client = new mongo(uri, {useNewUrlParser: true});
     client.connect(err=>{
-
         if(err) console.log("Unable to connect to server.");
-        
+
         const db = client.db('petzilla');
         const object = {"username": username, "password":password, "name": name, "pets":{}, "birthday": birthday, "gender": gender, "profile_pic_loc": "", "posts":{}, "account_created": Date()};
         db.collection("users").insertOne(object, function(err, res){
 
             if(err) throw err;
             console.log("Document Inserted");
-            db.close
-
+            client.close();
         })
-
     })
-
     res.redirect('/');
 })
 
