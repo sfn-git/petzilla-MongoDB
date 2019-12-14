@@ -39,29 +39,33 @@ app.get('/Login', (req,res)=>{
 
 })
 
-// app.get('/mongotest', (req, res)=>{
+app.get('/mongotest', (req, res)=>{
 
     
-//     const client = new mongo(uri, { useNewUrlParser: true });
-//     client.connect(err=>{
-//         if(err){console.error(err)}
-//         var messageOut = "Default Message";
-//         const db = client.db('petzilla');
-//         db.collection('users').find({}).toArray(function(err, result){
-//             if(err) throw err;
+    const client = new mongo(uri, { useNewUrlParser: true });
+    client.connect(err=>{
+        if(err){console.error(err)}
+        var messageOut = "Results: \n";
+        const db = client.db('petzilla');
+        db.collection('users').find({}).toArray(function(err, result){
+            if(err) throw err;
 
-//             console.log(result[0]);
-//             messageOut = JSON.stringify(result[0]);
-//             res.render('mongotest', {title: "Mongo Test", message: `${messageOut}`}) 
+            for(index in result){
+
+                messageOut += JSON.stringify(result[index]);
+                messageOut += "\n"
+
+            }
+            res.render('mongotest', {title: "Mongo Test", message: `${messageOut}`}) 
             
-//         });
+        });
     
-//         client.close();
+        client.close();
         
-//     })  
+    })  
     
 
-// })
+})
 
 // ALL POST REQUEST
 app.post('/Login', (req,res)=>{
@@ -69,8 +73,6 @@ app.post('/Login', (req,res)=>{
     // console.log(req);
     var username = req.body.username;
     var password = sha256(req.body.password);
-
-
 
     res.redirect('/')
 
@@ -90,8 +92,14 @@ app.post('/Create', (req,res)=>{
         if(err) console.log("Unable to connect to server.");
         
         const db = client.db('petzilla');
-        const object = {"username": username, "password":password, "name": name, "pets":{}, "birthday": birthday, "profile_pic_loc": "", "posts":{}, "account_created": Date()};
-        db.collection("users").insertOne(object)
+        const object = {"username": username, "password":password, "name": name, "pets":{}, "birthday": birthday, "gender": gender, "profile_pic_loc": "", "posts":{}, "account_created": Date()};
+        db.collection("users").insertOne(object, function(err, res){
+
+            if(err) throw err;
+            console.log("Document Inserted");
+            db.close
+
+        })
 
     })
 
