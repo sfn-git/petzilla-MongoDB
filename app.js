@@ -1,5 +1,7 @@
 const express = require('express');
 const sha256 = require('js-sha256');
+const fs = require('fs');
+const https = require('https');
 const app = express();
 const port = 3000;
 
@@ -12,11 +14,6 @@ var dbhost = dbconfig.host;
 var dbport = dbconfig.port;
 var dbdatabase = dbconfig.database;
 var uri = `mongodb://${dbusername}:${dbpassword}@${dbhost}:${dbport}/${dbdatabase}?authSource=petzilla`;
-
-// Connect to MongoDB
-
-
-
 
 app.set('view engine', 'pug');              //View Engine
 app.use(express.static('public'));    //Static Content
@@ -42,26 +39,29 @@ app.get('/Login', (req,res)=>{
 
 })
 
-app.get('/mongotest', (req, res)=>{
+// app.get('/mongotest', (req, res)=>{
 
-    var message;
-    const client = new mongo(uri, { useNewUrlParser: true });
-    client.connect(err=>{
-        if(err){console.error(err)}
     
-        const collection = client.db('petzilla').collection('users');
-        collection.find({}, function(err, result){
-            if(err) throw err;
-            message = result;
-            console.log(result)
-        });
+//     const client = new mongo(uri, { useNewUrlParser: true });
+//     client.connect(err=>{
+//         if(err){console.error(err)}
+//         var messageOut = "Default Message";
+//         const db = client.db('petzilla');
+//         db.collection('users').find({}).toArray(function(err, result){
+//             if(err) throw err;
+
+//             console.log(result[0]);
+//             messageOut = JSON.stringify(result[0]);
+//             res.render('mongotest', {title: "Mongo Test", message: `${messageOut}`}) 
+            
+//         });
     
-        client.close();
-    })
+//         client.close();
+        
+//     })  
+    
 
-    res.render('mongotest', {title: "Mongotest", message: message})
-
-})
+// })
 
 // ALL POST REQUEST
 app.post('/Login', (req,res)=>{
@@ -70,6 +70,8 @@ app.post('/Login', (req,res)=>{
     var username = req.body.username;
     var password = sha256(req.body.password);
 
+
+
     res.redirect('/')
 
 })
@@ -77,19 +79,30 @@ app.post('/Login', (req,res)=>{
 app.post('/Create', (req,res)=>{
 
     var username = req.body.username;
-    var password = req.body.password;
+    var password = sha256(req.body.password);
     var name = req.body.name;
     var birthday = req.body.birthday;
     var gender = req.body.gender;
 
+    const client = new mongo(uri, {useNewUrlParser: true});
+    client.connect(err=>{
+
+        if(err) console.log("Unable to connect to server.");
+        
+        const db = client.db('petzilla');
+        const object = {"username": username, "password":password, "name": name, "pets":{}, "birthday": birthday, "profile_pic_loc": "", "posts":{}, "account_created": Date()};
+        db.collection("users").insertOne(object)
+
+    })
+
     res.redirect('/');
 })
 
-
+// 404 Error
 app.get('*', (req,res)=>{
 
     res.status(404);
-    res.render('404', {title: 'PetZilla - 404'})
+    res.render('404', {title: 'PetZilla - Page Not Found :('})
 
 })
 

@@ -17,7 +17,12 @@
   },
   "homepage": "https://github.com/mrfn323/petzilla-MongoDB#readme",
   "dependencies": {
+    "acme-http-01-standalone": "^3.0.5",
+    "bootstrap": "^4.4.1",
     "express": "^4.17.1",
+    "greenlock": "^3.1.5",
+    "greenlock-manager-fs": "^3.1.1",
+    "greenlock-store-fs": "^3.2.2",
     "js-sha256": "^0.9.0",
     "mongodb": "^3.3.4",
     "mongoose": "^5.7.11",
