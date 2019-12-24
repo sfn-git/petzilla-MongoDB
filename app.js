@@ -3,16 +3,6 @@ const sha256 = require('js-sha256');
 const app = express();
 const port = 3000;
 
-// MongoDB Stuff
-const mongo = require('mongodb').MongoClient;
-var dbconfig = require('./dbconfig.json');
-var dbusername = dbconfig.username;
-var dbpassword = dbconfig.password;
-var dbhost = dbconfig.host;
-var dbport = dbconfig.port;
-var dbdatabase = dbconfig.database;
-var uri = `mongodb://${dbusername}:${dbpassword}@${dbhost}:${dbport}/${dbdatabase}?authSource=petzilla`;
-
 app.set('view engine', 'pug');              //View Engine
 app.use(express.static('public'));    //Static Content
 // Reading Post request
@@ -35,6 +25,42 @@ app.get('/Login', (req,res)=>{
 
     res.render('login', {title: 'PetZilla - Login'})
 
+})
+
+// MongoDB Stuff
+const mongo = require('mongodb').MongoClient;
+var dbconfig = require('./dbconfig.json');
+var dbusername = dbconfig.username;
+var dbpassword = dbconfig.password;
+var dbhost = dbconfig.host;
+var dbport = dbconfig.port;
+var dbdatabase = dbconfig.database;
+var uri = `mongodb://${dbusername}:${dbpassword}@${dbhost}:${dbport}/${dbdatabase}?authSource=petzilla`;
+
+//Post Request to Create Page
+app.post('/Create', (req,res)=>{
+
+    var username = req.body.username;
+    var password = sha256(req.body.password);
+    var name = req.body.name;
+    var birthday = req.body.birthday;
+    var gender = req.body.gender;
+
+    const client = new mongo(uri, {useNewUrlParser: true});
+    client.connect(err=>{
+        if(err) console.log("Unable to connect to server.");
+
+        const db = client.db('petzilla');
+        const object = {"username": username, "password":password, "name": name, "pets":{}, "birthday": birthday, 
+        "gender": gender, "profile_pic_loc": "", "posts":{}, "account_created": Date()};
+        db.collection("users").insertOne(object, function(err, res){
+
+            if(err) throw err;
+            console.log("Document Inserted");
+            client.close();
+        })
+    })
+    res.redirect('/');
 })
 
 app.get('/mongotest', (req, res)=>{
@@ -68,30 +94,6 @@ app.post('/Login', (req,res)=>{
 
     res.redirect('/')
 
-})
-
-app.post('/Create', (req,res)=>{
-
-    var username = req.body.username;
-    var password = sha256(req.body.password);
-    var name = req.body.name;
-    var birthday = req.body.birthday;
-    var gender = req.body.gender;
-
-    const client = new mongo(uri, {useNewUrlParser: true});
-    client.connect(err=>{
-        if(err) console.log("Unable to connect to server.");
-
-        const db = client.db('petzilla');
-        const object = {"username": username, "password":password, "name": name, "pets":{}, "birthday": birthday, "gender": gender, "profile_pic_loc": "", "posts":{}, "account_created": Date()};
-        db.collection("users").insertOne(object, function(err, res){
-
-            if(err) throw err;
-            console.log("Document Inserted");
-            client.close();
-        })
-    })
-    res.redirect('/');
 })
 
 // 404 Error
